@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ShowMe Shule OS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>body{font-family:system-ui}</style>
+</head>
+<body class="bg-slate-50">
+<div id="app"></div>
+<script>
+const dict={
+ en:{brand:"ShowMe Shule OS",hero:"Run Your Entire School From One Dashboard",sub:"Admissions, M-Pesa Fees, Exams, Transport, Parent Portal - Offline ready",cta:"Get Started Free",login:"Login",roles:"Choose Role",admin:"School Admin",teacher:"Teacher",student:"Student",parent:"Parent",lang:"SW",f1:"M-Pesa & Offline",f2:"Kiswahili + English",f3:"KCSE / CBC Ready",dash:"Dashboard",fees:"Fees Collected",stud:"Students",pend:"Pending",back:"Back Home"},
+  sw:{brand:"ShowMe Shule OS",hero:"Endesha Shule Yako Yote Kwa Dashibodi Moja",sub:"Udahili, Ada kwa M-Pesa, Mtihani, Usafiri, Portal ya Mzazi - Inafanya kazi bila mtandao",cta:"Anza Bure",login:"Ingia",roles:"Chagua Nafasi",admin:"Msimamizi",teacher:"Mwalimu",student:"Mwanafunzi",parent:"Mzazi",lang:"EN",f1:"M-Pesa na Bila Mtandao",f2:"Kiswahili + Kiingereza",f3:"KCSE / CBC Tayari",dash:"Dashibodi",fees:"Ada Zilizokusanywa",stud:"Wanafunzi",pend:"Madeni",back:"Rudi Nyumbani"}
+  }
+  let lang='en', view='home', role='admin'
+  function t(k){return dict[lang][k]||k}
+  function render(){
+   const d=dict[lang]
+    document.getElementById('app').innerHTML=`
+     <header class="bg-slate-900 text-white p-3 flex justify-between items-center sticky top-0">
+        <b onclick="view='home';render()" class="cursor-pointer">📚 ${d.brand}</b>
+           <div class="flex gap-2">
+                <button onclick="lang=lang=='en'?'sw':'en';render()" class="bg-slate-700 px-3 py-1 rounded-full text-sm font-bold">${d.lang}</button>
+                     <button onclick="view='login';render()" class="bg-blue-600 px-3 py-1 rounded-lg text-sm font-bold">${d.login}</button>
+                        </div>
+                         </header>
+                          ${view=='home'?`
+                             <div class="bg-slate-900 text-white p-8 text-center">
+                                  <h1 class="text-3xl font-black leading-tight">${d.hero}</h1>
+                                       <p class="text-slate-300 mt-3 max-w-xl mx-auto">${d.sub}</p>
+                                            <button onclick="view='login';render()" class="bg-blue-600 mt-5 px-6 py-3 rounded-xl font-black">${d.cta} →</button>
+                                                 <div class="bg-slate-800 mt-6 p-3 rounded-xl text-left text-sm max-w-sm mx-auto">✓ M-Pesa STK Push<br/>✓ 100% Offline PWA<br/>✓ SMS to Parents</div>
+                                                    </div>
+                                                       <div class="p-5">
+                                                            <h2 class="text-center font-black text-xl mb-4">${d.roles}</h2>
+                                                                 <div class="grid grid-cols-2 gap-3 max-w-lg mx-auto">
+                                                                        <div onclick="view='login';render()" class="bg-white p-4 rounded-2xl border">🏫<br/><b>${d.admin}</b></div>
+                                                                               <div onclick="view='login';render()" class="bg-white p-4 rounded-2xl border">👨‍🏫<br/><b>${d.teacher}</b></div>
+                                                                                      <div onclick="view='login';render()" class="bg-white p-4 rounded-2xl border">🎓<br/><b>${d.student}</b></div>
+                                                                                             <div onclick="view='login';render()" class="bg-white p-4 rounded-2xl border">👨‍👩‍👧<br/><b>${d.parent}</b></div>
+                                                                                                  </div>
+                                                                                                     </div>
+                                                                                                      ` : view=='login'?`
+                                                                                                         <div class="p-6 max-w-md mx-auto">
+                                                                                                              <h2 class="font-black text-2xl mt-4">Welcome / Karibu</h2>
+                                                                                                                   <p class="text-slate-500">Select Role</p>
+                                                                                                                        <div class="grid gap-2 mt-4">
+                                                                                                                               ${['admin','teacher','parent','student'].map(r=>`<button onclick="role='${r}';view='dash';render()" class="p-4 rounded-xl border text-left font-bold bg-white ${role==r?'border-blue-600 bg-blue-50':''}">${dict[lang][r]} ${role==r?'✓':''}</button>`).join('')}
+                                                                                                                                    </div>
+                                                                                                                                         <button onclick="view='dash';render()" class="w-full mt-4 bg-slate-900 text-white p-3 rounded-xl font-black">Login as ${dict[lang][role]} →</button>
+                                                                                                                                            </div>
+                                                                                                                                             ` : `
+                                                                                                                                                <div class="p-5 max-w-2xl mx-auto">
+                                                                                                                                                     <h2 class="font-black text-xl capitalize">${dict[lang][role]} ${d.dash}</h2>
+                                                                                                                                                          <div class="grid grid-cols-3 gap-2 mt-4">
+                                                                                                                                                                 <div class="bg-white p-3 rounded-xl border"><div class="text-xs text-slate-500">${d.fees}</div><div class="font-black">KES 2.4M</div></div>
+                                                                                                                                                                        <div class="bg-white p-3 rounded-xl border"><div class="text-xs text-slate-500">${d.stud}</div><div class="font-black">842</div></div>
+                                                                                                                                                                               <div class="bg-white p-3 rounded-xl border"><div class="text-xs text-slate-500">${d.pend}</div><div class="font-black">340K</div></div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                         <div class="bg-white mt-4 p-4 rounded-xl border">
+                                                                                                                                                                                                <b>Live M-Pesa Feed</b>
+                                                                                                                                                                                                       <div class="text-sm mt-2 space-y-1">
+                                                                                                                                                                                                                <div>✓ Brian O. paid 5,000 M-Pesa - 2m ago</div>
+                                                                                                                                                                                                                         <div>✓ Form 2 CAT marks uploaded</div>
+                                                                                                                                                                                                                                  <div>✓ SMS sent to 45 parents - Fees reminder</div>
+                                                                                                                                                                                                                                           <div>✓ New admission: Aisha Mohammed - Form 1</div>
+                                                                                                                                                                                                                                                  </div>
+                                                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                                                                            <button onclick="view='home';render()" class="w-full mt-6 text-blue-600 font-bold">← ${d.back}</button>
+                                                                                                                                                                                                                                                               </div>
+                                                                                                                                                                                                                                                                `}
+                                                                                                                                                                                                                                                                 `
+                                                                                                                                                                                                                                                                 }
+                                                                                                                                                                                                                                                                 render()
+                                                                                                                                                                                                                                                                 </script>
+                                                                                                                                                                                                                                                                 </body>
+                                                                                                                                                                                                                                                                 </html>
